@@ -2,7 +2,6 @@
 gui: true
 forward: true
 custom_hostname: leninner
-stable_debian_codename: "bullseye"
 timezone: "America/Bogota"
 tmp_dir: "/tmp"
 architecture: "x86_64"

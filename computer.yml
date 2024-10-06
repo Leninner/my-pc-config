@@ -12,7 +12,3 @@
     - user
     - packages
     - dotfiles
-    - security
-    - include_role:
-      name: gnome
-      when: gui == true
