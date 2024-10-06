@@ -54,3 +54,19 @@
 - name: Install VSCode
   include_tasks: vscode.yml
   tags: vscode
+
+- name: Install postman
+  include_tasks: postman.yml
+  tags: postman
+
+- name: Install NVM
+  include_tasks: nvm.yml
+  tags: nvm
+
+- name: Install Zoom
+  include_tasks: zoom.yml
+  tags: zoom
+
+- name: Install Chrome
+  include_tasks: chrome.yml
+  tags: chrome
