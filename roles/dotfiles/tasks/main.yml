@@ -16,7 +16,7 @@
   file:
     path: "/home/{{ user }}/.config/nvim/"
     state: directory
-    mode: "0755"
+    mode: 0755
     owner: "{{ user }}"
     group: "{{ user }}"
   tags: dotfiles
@@ -27,7 +27,7 @@
   file:
     path: "/home/{{ user }}/.config/wezterm/"
     state: directory
-    mode: "0755"
+    mode: 0755
     owner: "{{ user }}"
     group: "{{ user }}"
   tags: dotfiles

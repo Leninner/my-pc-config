@@ -1,5 +1,5 @@
 ---
-asdf_version: "v0.13.1"
+asdf_version: "v0.14.1"
 asdf_plugins:
   - name: "kubectl"
     version: "latest"
@@ -7,6 +7,3 @@ asdf_plugins:
     version: "latest"
   - name: "wezterm"
     version: "latest"
-# Version are tag on Github without the v
-scw_version: "2.32.1"
-starship_version: "1.20.1"

@@ -66,7 +66,6 @@ packages:
   - buildah
   - virtualenv
   - taskwarrior
-  - npm
   - nvm
   - golang
   - vagrant

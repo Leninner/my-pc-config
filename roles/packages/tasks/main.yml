@@ -12,20 +12,7 @@
     state: present
   become: true
 
-# Hashicorp
-- name: "Add Hashicorp repository key"
-  apt_key:
-    url: "https://apt.releases.hashicorp.com/gpg"
-    state: present
-  become: true
-
-- name: "Add Hashicorp repository"
-  apt_repository:
-    repo: "deb https://apt.releases.hashicorp.com {{ stable_debian_codename }} main"
-    state: present
-  become: true
-
-- name: "Upgrade all packages to the latest version"
+- name: Upgrade all packages to the latest version"
   become: true
   apt:
     name: "*"
