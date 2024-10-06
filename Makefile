@@ -8,7 +8,7 @@ init:
 	git clone https://github.com/alexarevalo9/ansible-setup-tools.git
 	sudo cp ~/ansible-setup-tools/ansible/debian/local.yml ~/ansible-setup-tools/local.yml
 	sudo ansible-playbook --ask-become-pass --ask-vault-pass ansible-setup-tools/local.yml -vvv
-  ansible-galaxy install -r requirements.yml
+	ansible-galaxy install -r requirements.yml
 
 gnome-theme:
 	mkdir -p ~/projets/Github/
