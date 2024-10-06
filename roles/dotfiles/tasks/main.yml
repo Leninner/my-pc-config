@@ -1,13 +1,17 @@
 ---
+- name: Clone dotfiles configuration
+  become: true
+  shell: git clone git@github.com:Leninner/dotfiles.git /home/{{ user }}/dotfiles
+
 - name: "Add configuration files"
   become: true
-  copy:
-    src: ../files/{{item}}
-    dest: "/home/{{ user }}"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    mode: 0644
-  with_items: [".zshrc", ".vimrc", ".tmux.conf"]
+  shell: ln -s /home/{{ user }}/dotfiles/{{ item }} /home/{{ user }}/{{ item }}
+  with_items: [".zshrc", ".p10k.zsh"]
+  tags: dotfiles
+
+- name: Source zshrc
+  become: true
+  shell: source /home/{{ user }}/.zshrc
   tags: dotfiles
 
 # Neovim Config is manage on package part
