@@ -2,9 +2,13 @@ firstrun:
 	init full
 
 init:
-	apt update && apt install python3 python3-pip3
-	pip3 install -r requirements.txt
-	ansible-galaxy install -r requirements.yml
+	sudo apt-add-repository -y ppa:ansible/ansible
+	sudo apt-get update -y
+	sudo apt-get install -y curl git software-properties-common ansible
+	git clone https://github.com/alexarevalo9/ansible-setup-tools.git
+	sudo cp ~/ansible-setup-tools/ansible/debian/local.yml ~/ansible-setup-tools/local.yml
+	sudo ansible-playbook --ask-become-pass --ask-vault-pass ansible-setup-tools/local.yml -vvv
+  ansible-galaxy install -r requirements.yml
 
 gnome-theme:
 	mkdir -p ~/projets/Github/
