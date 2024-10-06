@@ -8,6 +8,7 @@ This project contains all the configuration files written using Ansible.
 
 ```bash
 apt update && apt -y install git
+apt install make
 ```
 
 - Download Github repository
@@ -19,7 +20,8 @@ git clone git@github.com:Leninner/my-pc-config.git
 - Run the Makefile
 
 ```bash
-make firstrun
+make init # Install ansible
+make full # Execute all playbooks
 ```
 
 ## Related projects
