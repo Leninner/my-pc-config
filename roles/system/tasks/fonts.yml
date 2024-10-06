@@ -1,0 +1,35 @@
+---
+- name: Install fonts from Meslo.zip
+  block:
+    - name: Ensure unzip is installed
+      apt:
+        name: unzip
+        state: present
+        update_cache: yes
+
+    - name: Download the Meslo Nerd Fonts zip file
+      get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Meslo.zip
+        dest: /tmp/Meslo.zip
+
+    - name: Create the fonts directory if it doesn't exist
+      file:
+        path: ~/.local/share/fonts
+        state: directory
+        mode: 0755
+
+    - name: Extract Meslo.zip to the fonts directory
+      unarchive:
+        src: /tmp/Meslo.zip
+        dest: ~/.local/share/fonts
+        remote_src: yes
+
+    - name: Refresh the font cache
+      command: fc-cache -fv
+      args:
+        creates: ~/.local/share/fonts
+
+    - name: Clean up downloaded zip file
+      file:
+        path: /tmp/Meslo.zip
+        state: absent

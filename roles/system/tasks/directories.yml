@@ -17,3 +17,11 @@
         owner: "{{ user }}"
         group: "{{ user }}"
         mode: 0755
+
+    - name: Scripts
+      file:
+        path: "/home/{{ user }}/scripts"
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0755

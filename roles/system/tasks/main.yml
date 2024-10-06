@@ -12,3 +12,7 @@
 - name: Directories
   include_tasks: directories.yml
   tags: directories
+
+- name: Fonts
+  include_tasks: fonts.yml
+  tags: fonts
