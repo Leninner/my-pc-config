@@ -38,15 +38,24 @@
         - config
         - asdf
 
-    - name: Source asdf in the current shell session
-      shell: "source {{ asdf_user_home }}/.asdf/asdf.sh"
-      become: true
-      become_user: "{{ user }}"
-      args:
-        executable: /bin/bash
-      tags:
-        - install
-        - asdf
+    # - name: Source asdf in the current shell session
+    #   shell: "source {{ asdf_user_home }}/.asdf/asdf.sh"
+    #   become: true
+    #   become_user: "{{ user }}"
+    #   args:
+    #     executable: /bin/bash
+    #   tags:
+    #     - install
+    #     - asdf
+
+    - name: "Source asdf script"
+      template:
+        src: "asdf.sh.j2"
+        dest: "/etc/profile.d/asdf.sh"
+        owner: "root"
+        group: "root"
+        mode: 0755
+      become: True
 
     - name: Install asdf plugins
       command: asdf plugin-add {{ item.name }} {{ item.repository | default('') }}
