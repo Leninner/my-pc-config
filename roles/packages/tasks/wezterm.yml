@@ -1,8 +1,41 @@
-- name: "Clone wezterm configuration"
-  ansible.builtin.git:
-    repo: "https://github.com/Leninner/wezterm-config.git"
-    dest: "/home/{{ user }}/.config/wezterm/"
-    force: yes
-    accept_hostkey: true
-    update: yes
-  tags: wezterm
+---
+- name: Install WezTerm
+  hosts: all
+  become: true
+  block:
+    - name: Install necessary packages
+      apt:
+        name:
+          - gnupg
+          - lsb-release
+        state: present
+
+    - name: Add GPG key for WezTerm
+      shell: |
+        curl -fsSL https://apt.fury.io/wez/gpg.key | gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+      args:
+        executable: /bin/bash
+
+    - name: Add WezTerm repository to sources list
+      lineinfile:
+        path: /etc/apt/sources.list.d/wezterm.list
+        line: "deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ {{ ansible_distribution_release }} main"
+        create: yes
+
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    - name: Install WezTerm
+      apt:
+        name: wezterm
+        state: present
+
+    - name: "Clone wezterm configuration"
+      ansible.builtin.git:
+        repo: "https://github.com/Leninner/wezterm-config.git"
+        dest: "/home/{{ user }}/.config/wezterm/"
+        force: yes
+        accept_hostkey: true
+        update: yes
+      tags: wezterm

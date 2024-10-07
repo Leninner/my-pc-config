@@ -29,12 +29,6 @@
     force: yes
   tags: upgrade
 
-- name: Install asdf suff
-  include_tasks: asdf.yml
-  tags:
-    - upgrade
-    - asdf
-
 - name: Install NeoVim
   include_tasks: neovim.yml
   tags: neovim

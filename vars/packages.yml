@@ -1,9 +1,0 @@
----
-asdf_version: "v0.14.1"
-asdf_plugins:
-  - name: "kubectl"
-    version: "latest"
-  - name: "helm"
-    version: "latest"
-  - name: "wezterm"
-    version: "latest"
