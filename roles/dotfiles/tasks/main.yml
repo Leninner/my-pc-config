@@ -1,7 +1,12 @@
 ---
-- name: Clone dotfiles configuration
-  become: true
-  shell: git clone https://github.com/Leninner/dotfiles.git /home/{{ user }}/dotfiles
+- name: "Clone dotfiles configuration"
+  ansible.builtin.git:
+    repo: "https://github.com/Leninner/dotfiles.git"
+    dest: "/home/{{ user }}/dotfiles/"
+    force: yes
+    accept_hostkey: true
+    update: yes
+  tags: dotfiles
 
 - name: "Add configuration files"
   become: true
