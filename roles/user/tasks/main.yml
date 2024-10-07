@@ -1,41 +1,46 @@
 ---
-- name: "Create group wheel (for security)"
-  become: "yes"
-  group:
-    name: wheel
-    state: present
+- name: User related configuration
+  block:
+    - name: "Ensure group 'wheel' exists (for security)"
+      become: true
+      group:
+        name: wheel
+        state: present
 
-- name: Create user {{ user }}
-  become: "yes"
-  user:
-    name: "{{ user }}"
-    comment: "{{ user }}"
-    groups: "{{ user }},wheel,cdrom,floppy,audio,dip,video,plugdev,netdev,bluetooth,scanner"
-    shell: "/bin/zsh"
+    - name: Ensure user {{ user }} exists and belongs to required groups
+      become: true
+      user:
+        name: "{{ user }}"
+        comment: "{{ user }}"
+        groups: "{{ user }},wheel,cdrom,floppy,audio,dip,video,plugdev,netdev,bluetooth,scanner"
+        append: true # Ensures user is added to the groups without overwriting existing ones
+        shell: "/bin/zsh"
+        state: present # Ensures user is created if not already present
 
-- name: Create sudo rules for user {{ user }}
-  become: "yes"
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: "^%{{ user }}"
-    line: "%{{ user }} ALL=(ALL) NOPASSWD: ALL"
-    validate: "visudo -cf %s"
+    - name: Ensure sudo rules for user {{ user }}
+      become: true
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: "^%{{ user }}"
+        line: "%{{ user }} ALL=(ALL) NOPASSWD: ALL"
+        validate: "visudo -cf %s" # Validates the sudoers file syntax before saving
 
-- name: Create ssh directory
-  become: "yes"
-  file:
-    path: "/home/{{ user }}/.ssh"
-    state: directory
-    mode: "0755"
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    - name: Ensure .ssh directory exists with correct permissions
+      become: true
+      file:
+        path: "/home/{{ user }}/.ssh"
+        state: directory
+        mode: "0700" # Secure permissions for .ssh directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
 
-- name: Generate sshkey
-  become: "yes"
-  openssh_keypair:
-    path: "/home/{{ user }}/.ssh/id_{{ user }}_{{ custom_hostname }}"
-    type: ed25519
-    mode: "0400"
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    - name: Generate SSH key pair for user {{ user }}
+      become: true
+      openssh_keypair:
+        path: "/home/{{ user }}/.ssh/id_{{ user }}_{{ custom_hostname }}"
+        type: ed25519
+        mode: "0600" # More secure permission for the SSH key
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        state: present # Ensures key is generated if it doesn't exist

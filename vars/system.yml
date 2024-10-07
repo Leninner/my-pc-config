@@ -1,7 +1,7 @@
 ---
 gui: true
 forward: true
-custom_hostname: leninner
+custom_hostname: leninner_pc
 timezone: "America/Bogota"
 tmp_dir: "/tmp"
 architecture: "x86_64"
