@@ -42,6 +42,8 @@
       shell: "source {{ asdf_user_home }}/.asdf/asdf.sh"
       become: true
       become_user: "{{ user }}"
+      args:
+        executable: /bin/bash
       tags:
         - install
         - asdf
