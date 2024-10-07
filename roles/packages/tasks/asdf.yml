@@ -43,7 +43,7 @@
       become: true
       become_user: "{{ user }}"
       args:
-        executable: /bin/bash
+        executable: /bin/zsh
       tags:
         - install
         - asdf
