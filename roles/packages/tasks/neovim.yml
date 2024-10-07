@@ -11,6 +11,13 @@
     dest: "/opt/"
   tags: neovim
 
+- name: Link Neovim binary
+  file:
+    src: "/opt/nvim-linux64/bin/nvim"
+    dest: "/usr/local/bin/nvim"
+    state: link
+  tags: neovim
+
 - name: "Clone neovim configuration"
   ansible.builtin.git:
     repo: "https://github.com/Leninner/nvim-config.git" #v0.10.2
