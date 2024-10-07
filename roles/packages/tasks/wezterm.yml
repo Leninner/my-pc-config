@@ -32,6 +32,4 @@
         force: yes
         accept_hostkey: true
         update: yes
-        owner: "{{ user }}"
-        group: "{{ user }}"
       tags: wezterm
