@@ -1,35 +1,35 @@
 ---
-- name: "Clone dotfiles configuration"
-  ansible.builtin.git:
-    repo: "https://github.com/Leninner/dotfiles.git"
-    dest: "/home/{{ user }}/dotfiles/"
-    force: yes
-    accept_hostkey: true
-    update: yes
-  tags: dotfiles
-
-- name: "Remove existing configuration files"
+- name: Dorfiles configuration
   become: true
-  file:
-    path: "/home/{{ user }}/{{ item }}"
-    state: absent
-  with_items:
-    - ".zshrc"
-    - ".p10k.zsh"
-  tags: dotfiles
+  block:
+    - name: "Clone dotfiles configuration"
+      ansible.builtin.git:
+        repo: "https://github.com/Leninner/dotfiles.git"
+        dest: "/home/{{ user }}/dotfiles/"
+        force: yes
+        accept_hostkey: true
+        update: yes
+      tags: dotfiles
 
-- name: "Add configuration files as symbolic links"
-  become: true
-  file:
-    src: "/home/{{ user }}/dotfiles/{{ item }}"
-    dest: "/home/{{ user }}/{{ item }}"
-    state: link
-  with_items:
-    - ".zshrc"
-    - ".p10k.zsh"
-  tags: dotfiles
+    - name: "Remove existing configuration files"
+      file:
+        path: "/home/{{ user }}/{{ item }}"
+        state: absent
+      with_items:
+        - ".zshrc"
+        - ".p10k.zsh"
+      tags: dotfiles
 
-- name: "Source zshrc"
-  become: true
-  shell: zsh -c 'source /home/{{ user }}/.zshrc'
-  tags: dotfiles
+    - name: "Add configuration files as symbolic links"
+      file:
+        src: "/home/{{ user }}/dotfiles/{{ item }}"
+        dest: "/home/{{ user }}/{{ item }}"
+        state: link
+      with_items:
+        - ".zshrc"
+        - ".p10k.zsh"
+      tags: dotfiles
+
+    - name: "Source zshrc"
+      shell: zsh -c 'source /home/{{ user }}/.zshrc'
+      tags: dotfiles
