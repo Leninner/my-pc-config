@@ -62,31 +62,19 @@
         - plugins
         - asdf
 
-    - name: Install specific versions for asdf plugins
+    - name: "install apps with asdf"
       command: "bash -lc 'asdf install {{ item.0.name }} {{ item.1 }}'"
       args:
         creates: "{{ asdf_user_home }}/.asdf/installs/{{ item.0.name }}/{{ item.1 }}"
         chdir: "{{ asdf_user_home }}"
       with_subelements:
         - "{{ asdf_plugins }}"
-        - version
-      when: asdf_plugins | length > 0
-      become: true
-      become_user: "{{ user }}"
-      tags:
-        - version
-        - asdf
-
-    - name: Set global version for asdf plugins
-      command: "bash -lc 'asdf global {{ item.0.name }} {{ item.1 }}'"
-      args:
-        chdir: "{{ asdf_user_home }}"
-      with_subelements:
-        - "{{ asdf_plugins }}"
         - versions
-      when: asdf_plugins | length > 0
-      become: true
+        - flags:
+          skip_missing: True
+      when: asdf_plugins|length > 0
+      become: True
       become_user: "{{ user }}"
       tags:
-        - global
+        - upgrade
         - asdf
