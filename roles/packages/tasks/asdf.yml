@@ -6,15 +6,20 @@
     - upgrade
     - asdf
 
-- name: "Create ASDF directory"
+- name: "Create ASDF directory as root"
   become: true
   file:
-    path: "/home/{{ user }}/.asdf"
+    path: "{{ asdf_user_home }}/.asdf"
     state: directory
     mode: 0755
+
+- name: "Change ownership to leninner"
+  become: true
+  file:
+    path: "{{ asdf_user_home }}/.asdf"
+    state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
-  tags: asdf
 
 - name: "install asdf"
   git:
