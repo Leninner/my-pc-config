@@ -1,13 +1,8 @@
 ---
-- name: Get the current hostname
-  command: hostnamectl --static
-  register: current_hostname
-
-- name: Set hostname if it is not already set
-  become: true
+- name: "Update Hostname"
   hostname:
     name: "{{ custom_hostname }}"
-  when: current_hostname.stdout != "{{ custom_hostname }}"
+  become: true
 
 - name: "Set timezone"
   timezone:
