@@ -21,7 +21,7 @@
     repo: "https://github.com/asdf-vm/asdf.git"
     dest: "{{ asdf_user_home }}/.asdf"
     version: "{{ asdf_version }}"
-  become: True
+  become: true
   become_user: "{{ user }}"
   tags:
     - upgrade
