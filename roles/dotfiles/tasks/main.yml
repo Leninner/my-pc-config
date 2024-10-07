@@ -8,13 +8,28 @@
     update: yes
   tags: dotfiles
 
-- name: "Add configuration files"
+- name: "Remove existing configuration files"
   become: true
-  shell: ln -s /home/{{ user }}/dotfiles/{{ item }} /home/{{ user }}/{{ item }}
-  with_items: [".zshrc", ".p10k.zsh"]
+  file:
+    path: "/home/{{ user }}/{{ item }}"
+    state: absent
+  with_items:
+    - ".zshrc"
+    - ".p10k.zsh"
   tags: dotfiles
 
-- name: Source zshrc
+- name: "Add configuration files as symbolic links"
   become: true
-  shell: source /home/{{ user }}/.zshrc
+  file:
+    src: "/home/{{ user }}/dotfiles/{{ item }}"
+    dest: "/home/{{ user }}/{{ item }}"
+    state: link
+  with_items:
+    - ".zshrc"
+    - ".p10k.zsh"
+  tags: dotfiles
+
+- name: "Source zshrc"
+  become: true
+  shell: zsh -c 'source /home/{{ user }}/.zshrc'
   tags: dotfiles
