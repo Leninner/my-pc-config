@@ -6,6 +6,15 @@
     - upgrade
     - asdf
 
+- name: "Create ASDF directory"
+  file:
+    path: "/home/{{ user }}/.asdf"
+    state: directory
+    mode: 0755
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  state: directory
+
 - name: "install asdf"
   git:
     repo: "https://github.com/asdf-vm/asdf.git"
