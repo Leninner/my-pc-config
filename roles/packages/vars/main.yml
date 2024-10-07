@@ -31,7 +31,6 @@ packages:
   - debsecan
   - debsums
   - needrestart
-  - kubectl
   - spotify-client
   - google-cloud-sdk
   - vlc
