@@ -32,7 +32,6 @@ packages:
   - debsums
   - needrestart
   - spotify-client
-  - google-cloud-sdk
   - vlc
   - golang
   - python3-openstackclient
