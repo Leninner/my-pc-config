@@ -1,0 +1,87 @@
+---
+- name: "Set GNOME Wallpaper"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///home/{{ user }}/.wallpaper.png'"
+
+- name: "Gnome show date"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/interface/clock-show-date"
+    value: "true"
+    state: present
+
+- name: "Gnome date use 24h format"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/interface/clock-format"
+    value: "'24h'"
+    state: present
+
+- name: "Gnome show seconds"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/interface/clock-show-seconds"
+    value: "true"
+    state: present
+
+- name: "Gnome show battery percentage"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/interface/show-battery-percentage"
+    value: "true"
+    state: present
+
+- name: "Gnome set plugins"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/shell/enabled-extensions"
+    value: "['horizontal-workspaces@gnome-shell-extensions.gcampax.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'Vitals@CoreCoding.com']"
+    state: present
+
+- name: "Gnome set user theme"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/shell/extensions/user-theme/name"
+    value: "''"
+    state: present
+
+- name: "Gnome set GTK theme"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'Adwaita-dark'"
+    state: present
+
+- name: "Gnome set WM theme"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/theme"
+    value: "'Adwaita-dark'"
+    state: present
+
+- name: "Gnome set dark"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/wm/interface/color-scheme"
+    value: "'prefer-dark'"
+    state: present
+
+- name: "Set favorite Apps"
+  become: true
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/shell/favorite-apps"
+    value: "{{ fav_apps }}"
+    state: present

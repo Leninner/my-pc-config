@@ -1,0 +1,24 @@
+---
+url_deb_icons: ""
+packages:
+  - gnome-tweaks
+  - lm-sensors
+  - gnome-todo
+  - gnome-boxes
+  - wl-clipboard
+  - yarn # For zsh modules
+  - silversearcher-ag
+  - vim-gtk3 # To have the clipboard feature enable
+to_remove:
+  - gnome-robots
+  - gnome-music
+  - gnome-mahjongg
+  - gnome-logs
+  - gnome-mines
+  - gnome-nibbles
+  - gnome-taquin
+  - gnome-tetravex
+  - evolution
+fav_apps: "['org.gnome.Terminal.desktop']"
+dconf_path_theme: "/org/gnome/shell/extensions/user-theme/name"
+dconf_path_icon: "/org/gnome/desktop/interface/icon-theme"

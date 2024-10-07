@@ -1,0 +1,28 @@
+---
+- name: "Install tools and stuff"
+  become: true
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    autoclean: yes
+
+- name: "Remove tools (not needed, games etc.)"
+  become: true
+  apt:
+    name: "{{ to_remove }}"
+    state: absent
+
+- name: "Copy wallpaper file"
+  become: true
+  become_user: "{{ user }}"
+  copy:
+    src: "files/wallpaper.png"
+    dest: "/home/{{ user }}/.wallpaper.png"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Parameter PC by using dconf
+  include_tasks: dconf.yml
+
+- name: set theme (Gnome and icons)
+  include_tasks: theme.yml
