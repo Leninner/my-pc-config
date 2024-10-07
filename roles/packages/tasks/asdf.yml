@@ -29,7 +29,7 @@
 
     - name: Add asdf to shell configuration
       lineinfile:
-        path: "/home/{{ user }}/.zshrc"
+        path: "/home/{{ user }}/.bashrc"
         regexp: '^\. \[ -f "/home/{{ user }}/\.asdf/asdf\.sh" \] && source "/home/{{ user }}/\.asdf/asdf\.sh"$'
         line: '. "/home/{{ user }}/.asdf/asdf.sh"'
       become: true
