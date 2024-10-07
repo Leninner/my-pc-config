@@ -20,7 +20,7 @@
       register: oh_my_zsh_installed
 
     - name: Install Oh-My-Zsh
-      shell: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer
+      command: sh -c "$(curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer)" "" --unattended
       become_user: "{{ user }}"
       when: oh_my_zsh_installed.stat.exists == False
 
