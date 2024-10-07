@@ -1,29 +1,90 @@
-- name: ZSH
+---
+- name: ZSH Configuration
   become: true
   tags: zsh
   block:
-    - name: Install zsh
-      apt: name=zsh
+    - name: Install Zsh
+      apt:
+        name: zsh
+        state: present
+        update_cache: yes
 
-    - name: Change shell to zsh
-      shell: chsh -s $(which zsh)
+    - name: Change shell to Zsh for user {{ user }}
+      shell: chsh -s $(which zsh) "{{ user }}"
+      args:
+        executable: /bin/bash
 
-    - name: Check that the oh-my-zsh exists
+    - name: Check if Oh-My-Zsh is installed
       stat:
         path: "/home/{{ user }}/.oh-my-zsh"
-      register: oh_my_stats
+      register: oh_my_zsh_installed
 
-    - name: Oh-My-Zsh
-      shell: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer
-      when: oh_my_stats.stat.exists == False
+    - name: Install Oh-My-Zsh
+      command: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || true
       become_user: "{{ user }}"
+      when: oh_my_zsh_installed.stat.exists == False
 
-    - name: Check that the powerlevel10k exists
+    - name: Check if Powerlevel10K theme is installed
       stat:
         path: "/home/{{ user }}/.oh-my-zsh/custom/themes/powerlevel10k"
-      register: powerlevel10k_stats
+      register: powerlevel10k_installed
 
-    - name: Powerlevel10K
-      shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-      when: powerlevel10k_stats.stat.exists == False
+    - name: Install Powerlevel10K theme
+      git:
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: "/home/{{ user }}/.oh-my-zsh/custom/themes/powerlevel10k"
+        depth: 1
       become_user: "{{ user }}"
+      when: powerlevel10k_installed.stat.exists == False
+
+    - name: Check if Zsh Autosuggestions is installed
+      stat:
+        path: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+      register: autosuggestions_installed
+
+    - name: Install Zsh Autosuggestions plugin
+      git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions.git
+        dest: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+        depth: 1
+      become_user: "{{ user }}"
+      when: autosuggestions_installed.stat.exists == False
+
+    - name: Check if Zsh Syntax Highlighting is installed
+      stat:
+        path: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+      register: syntax_highlighting_installed
+
+    - name: Install Zsh Syntax Highlighting plugin
+      git:
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+        dest: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+        depth: 1
+      become_user: "{{ user }}"
+      when: syntax_highlighting_installed.stat.exists == False
+
+    - name: Check if Fast Syntax Highlighting is installed
+      stat:
+        path: "/home/{{ user }}/.oh-my-zsh/custom/plugins/fast-syntax-highlighting"
+      register: fast_syntax_highlighting_installed
+
+    - name: Install Fast Syntax Highlighting plugin
+      git:
+        repo: https://github.com/zdharma-continuum/fast-syntax-highlighting.git
+        dest: "/home/{{ user }}/.oh-my-zsh/custom/plugins/fast-syntax-highlighting"
+        depth: 1
+      become_user: "{{ user }}"
+      when: fast_syntax_highlighting_installed.stat.exists == False
+
+    - name: Check if Zsh Autocomplete is installed
+      stat:
+        path: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autocomplete"
+      register: autocomplete_installed
+
+    - name: Install Zsh Autocomplete plugin
+      git:
+        repo: https://github.com/marlonrichert/zsh-autocomplete.git
+        dest: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autocomplete"
+        depth: 1
+      become_user: "{{ user }}"
+      when: autocomplete_installed.stat.exists == False
