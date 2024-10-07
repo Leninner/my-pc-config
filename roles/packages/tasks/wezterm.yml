@@ -1,6 +1,5 @@
 ---
 - name: Install WezTerm
-  hosts: all
   become: true
   block:
     - name: Install necessary packages
