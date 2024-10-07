@@ -43,7 +43,7 @@
       become: true
       become_user: "{{ user }}"
       args:
-        executable: /bin/zsh
+        executable: /bin/bash
       tags:
         - install
         - asdf
@@ -53,7 +53,6 @@
       args:
         creates: "{{ asdf_user_home }}/.asdf/plugins/{{ item.name }}"
         chdir: "{{ asdf_user_home }}"
-        executable: /bin/zsh
       with_items: "{{ asdf_plugins }}"
       when: asdf_plugins | length > 0
       become: true
