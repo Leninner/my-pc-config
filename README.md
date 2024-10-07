@@ -14,7 +14,7 @@ apt install make
 - Download Github repository
 
 ```bash
-git clone git@github.com:Leninner/my-pc-config.git
+git clone https://github.com/Leninner/my-pc-config.git
 ```
 
 - Run the Makefile

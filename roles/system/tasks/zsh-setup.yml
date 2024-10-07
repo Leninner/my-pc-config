@@ -20,7 +20,7 @@
       register: oh_my_zsh_installed
 
     - name: Install Oh-My-Zsh
-      command: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || true
+      command: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > ~/.oh-my-installer && chmod +x ~/.oh-my-installer && ~/.oh-my-installer
       become_user: "{{ user }}"
       when: oh_my_zsh_installed.stat.exists == False
 
