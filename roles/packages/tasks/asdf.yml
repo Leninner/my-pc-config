@@ -7,13 +7,14 @@
     - asdf
 
 - name: "Create ASDF directory"
+  become: true
   file:
     path: "/home/{{ user }}/.asdf"
     state: directory
     mode: 0755
     owner: "{{ user }}"
     group: "{{ user }}"
-  state: directory
+  tags: asdf
 
 - name: "install asdf"
   git:
