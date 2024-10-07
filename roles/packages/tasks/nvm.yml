@@ -22,9 +22,3 @@
 
     - name: Install nvm
       shell: "bash /home/{{ user }}/scripts/install_nvm.sh"
-
-    - name: Source nvm
-      shell: "source /home/{{ user }}/.nvm/nvm.sh"
-
-    - name: Install node LTS version as default
-      shell: "nvm install --lts"
