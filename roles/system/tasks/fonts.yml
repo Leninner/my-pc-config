@@ -9,14 +9,10 @@
         update_cache: yes
 
     - name: Download the Meslo Nerd Fonts zip file
-      ansible.builtin.git:
-        repo: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Meslo.zip
+      get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Meslo.zip
         dest: /tmp/Meslo.zip
-        force: yes
-        accept_hostkey: yes
-        update: yes
-        owner: "{{ user }}"
-        group: "{{ user }}"
+        mode: 0644
 
     - name: Create the fonts directory if it doesn't exist
       file:
