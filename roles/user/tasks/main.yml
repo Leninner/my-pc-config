@@ -7,6 +7,12 @@
         name: wheel
         state: present
 
+    - name: Ensure group {{ user }} exists
+      become: true
+      group:
+        name: "{{ user }}"
+        state: present
+
     - name: Ensure user {{ user }} exists and belongs to required groups
       become: true
       user:

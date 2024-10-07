@@ -16,7 +16,7 @@ debug:
 	ansible-playbook -vvv computer.yml --tags all
 
 full:
-	ansible-playbook computer.yml --tags all
+	ansible-playbook computer.yml --tags all --ask-become-pass
 
 upgrade:
 	ansible-playbook computer.yml --tags "upgrade,neovim"
