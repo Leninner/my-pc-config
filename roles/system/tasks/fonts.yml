@@ -1,5 +1,6 @@
 ---
 - name: Install fonts from Meslo.zip
+  become: true
   block:
     - name: Ensure unzip is installed
       apt:
