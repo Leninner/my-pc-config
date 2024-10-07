@@ -9,17 +9,12 @@
           - lsb-release
         state: present
 
-    - name: Add GPG key for WezTerm
+    - name: Add GPG key for WezTerm and add repository
       shell: |
-        curl -fsSL https://apt.fury.io/wez/gpg.key | gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+        curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg 
+        echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
       args:
         executable: /bin/bash
-
-    - name: Add WezTerm repository to sources list
-      lineinfile:
-        path: /etc/apt/sources.list.d/wezterm.list
-        line: "deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ {{ ansible_distribution_release }} main"
-        create: yes
 
     - name: Update APT package cache
       apt:
