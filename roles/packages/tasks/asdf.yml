@@ -49,10 +49,11 @@
         - asdf
 
     - name: Install asdf plugins
-      command: "zsh -c 'asdf plugin-add {{ item.name }} {{ item.repository | default('') }}'"
+      command: asdf plugin-add {{ item.name }} {{ item.repository | default('') }}
       args:
         creates: "{{ asdf_user_home }}/.asdf/plugins/{{ item.name }}"
         chdir: "{{ asdf_user_home }}"
+        executable: /bin/zsh
       with_items: "{{ asdf_plugins }}"
       when: asdf_plugins | length > 0
       become: true
@@ -69,12 +70,12 @@
         chdir: "{{ asdf_user_home }}"
       with_subelements:
         - "{{ asdf_plugins }}"
-        - versions
+        - version
       when: asdf_plugins | length > 0
       become: true
       become_user: "{{ user }}"
       tags:
-        - versions
+        - version
         - asdf
 
     - name: Set global version for asdf plugins
