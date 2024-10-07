@@ -64,3 +64,7 @@
 - name: Install Chrome
   include_tasks: chrome.yml
   tags: chrome
+
+- name: Install docker
+  include_tasks: docker.yml
+  tags: docker
