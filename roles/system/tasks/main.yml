@@ -16,3 +16,7 @@
 - name: Fonts
   include_tasks: fonts.yml
   tags: fonts
+
+- name: ZSH setup
+  include_tasks: zsh-setup.yml
+  tags: zsh
