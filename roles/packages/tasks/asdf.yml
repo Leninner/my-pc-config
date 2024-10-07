@@ -1,64 +1,90 @@
 ---
-- name: "ASDF set home var"
-  set_fact:
-    "asdf_user_home": "/home/{{ user }}"
-  tags:
-    - upgrade
-    - asdf
-
-- name: "Create ASDF directory as root"
+- name: "Install and configure asdf"
   become: true
-  file:
-    path: "{{ asdf_user_home }}/.asdf"
-    state: directory
-    mode: 0755
+  tags: asdf
+  block:
+    - name: Register asdf user home
+      set_fact:
+        asdf_user_home: "/home/{{ user }}"
 
-- name: "Change ownership to leninner"
-  become: true
-  file:
-    path: "{{ asdf_user_home }}/.asdf"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    - name: Install dependencies for asdf (curl, git)
+      apt:
+        name:
+          - curl
+          - git
+        state: present
+        update_cache: yes
+      tags: dependencies
 
-- name: "install asdf"
-  git:
-    repo: "https://github.com/asdf-vm/asdf.git"
-    dest: "{{ asdf_user_home }}/.asdf"
-    version: "{{ asdf_version }}"
-  become: true
-  become_user: "{{ user }}"
-  tags:
-    - upgrade
-    - asdf
+    - name: Clone asdf repository
+      git:
+        repo: "https://github.com/asdf-vm/asdf.git"
+        dest: "/home/{{ user }}/.asdf"
+        version: "{{ asdf_version }}"
+      become: true
+      become_user: "{{ user }}"
+      tags:
+        - install
+        - asdf
 
-- name: "install asdf plugins"
-  command: "zsh -c 'asdf plugin-add {{ item.name }} {{ item.repository | default() }}'"
-  args:
-    creates: "{{ asdf_user_home }}/.asdf/plugins/{{ item.name }}"
-    chdir: "{{ asdf_user_home }}"
-  with_items: "{{ asdf_plugins }}"
-  when: asdf_plugins|length > 0
-  become: True
-  become_user: "{{ user }}"
-  ignore_errors: True
-  tags:
-    - upgrade
-    - asdf
+    - name: Add asdf to shell configuration
+      lineinfile:
+        path: "/home/{{ user }}/.zshrc"
+        regexp: '^\. \[ -f "/home/{{ user }}/\.asdf/asdf\.sh" \] && source "/home/{{ user }}/\.asdf/asdf\.sh"$'
+        line: '. "/home/{{ user }}/.asdf/asdf.sh"'
+      become: true
+      become_user: "{{ user }}"
+      tags:
+        - config
+        - asdf
 
-- name: "install apps with asdf"
-  command: "bash -lc 'asdf install {{ item.0.name }} {{ item.1 }}'"
-  args:
-    creates: "{{ asdf_user_home }}/.asdf/installs/{{ item.0.name }}/{{ item.1 }}"
-    chdir: "{{ asdf_user_home }}"
-  with_subelements:
-    - "{{ asdf_plugins }}"
-    - versions
-    - flags:
-      skip_missing: True
-  when: asdf_plugins|length > 0
-  become: True
-  become_user: "{{ user }}"
-  tags:
-    - upgrade
-    - asdf
+    - name: Source asdf in the current shell session
+      shell: "source {{ asdf_user_home }}/.asdf/asdf.sh"
+      become: true
+      become_user: "{{ user }}"
+      tags:
+        - install
+        - asdf
+
+    - name: Install asdf plugins
+      command: "zsh -c 'asdf plugin-add {{ item.name }} {{ item.repository | default('') }}'"
+      args:
+        creates: "{{ asdf_user_home }}/.asdf/plugins/{{ item.name }}"
+        chdir: "{{ asdf_user_home }}"
+      with_items: "{{ asdf_plugins }}"
+      when: asdf_plugins | length > 0
+      become: true
+      become_user: "{{ user }}"
+      ignore_errors: true
+      tags:
+        - plugins
+        - asdf
+
+    - name: Install specific versions for asdf plugins
+      command: "bash -lc 'asdf install {{ item.0.name }} {{ item.1 }}'"
+      args:
+        creates: "{{ asdf_user_home }}/.asdf/installs/{{ item.0.name }}/{{ item.1 }}"
+        chdir: "{{ asdf_user_home }}"
+      with_subelements:
+        - "{{ asdf_plugins }}"
+        - versions
+      when: asdf_plugins | length > 0
+      become: true
+      become_user: "{{ user }}"
+      tags:
+        - versions
+        - asdf
+
+    - name: Set global version for asdf plugins
+      command: "bash -lc 'asdf global {{ item.0.name }} {{ item.1 }}'"
+      args:
+        chdir: "{{ asdf_user_home }}"
+      with_subelements:
+        - "{{ asdf_plugins }}"
+        - versions
+      when: asdf_plugins | length > 0
+      become: true
+      become_user: "{{ user }}"
+      tags:
+        - global
+        - asdf
