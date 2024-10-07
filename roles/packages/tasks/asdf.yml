@@ -49,8 +49,8 @@
     #     - asdf
 
     - name: "Source asdf script"
-      template:
-        src: "asdf.sh.j2"
+      copy:
+        src: "/home/{{ user }}/.asdf/asdf.sh"
         dest: "/etc/profile.d/asdf.sh"
         owner: "root"
         group: "root"
