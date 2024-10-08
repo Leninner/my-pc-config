@@ -16,7 +16,6 @@
 
     - name: Ensure default shell is zsh
       shell: chsh -s $(which zsh) "{{ user }}"
-      become_user: "{{ user }}"
 
     - name: Check if Powerlevel10K theme is installed
       stat:
