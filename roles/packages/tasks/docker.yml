@@ -12,7 +12,7 @@
         name:
           - ca-certificates
           - curl
-      state: present
+        state: present
 
     - name: Create directory for Docker's GPG key
       file:
@@ -32,7 +32,7 @@
 
     - name: Update apt package index after adding Docker repository
       apt:
-      update_cache: yes
+        update_cache: yes
 
     - name: Install Docker packages
       apt:
