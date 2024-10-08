@@ -1,6 +1,7 @@
 ---
 - name: Install Docker on Ubuntu
   become: true
+  tags: docker
   block:
     - name: Update apt package index
       apt:

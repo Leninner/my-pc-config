@@ -24,6 +24,9 @@ upgrade:
 neovim:
 	ansible-playbook computer.yml --tags "neovim"
 
+docker:
+	ansible-playbook computer.yml --tags "docker"
+
 asdf:
 	ansible-playbook computer.yml --tags "asdf"
 
