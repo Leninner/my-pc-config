@@ -14,13 +14,8 @@
       become_user: "{{ user }}"
       when: oh_my_zsh_installed.stat.exists == False
 
-    - name: Check current shell for the user
-      command: "getent passwd {{ user }} | awk -F: '{print $7}'"
-      register: current_shell
-
     - name: Ensure default shell is zsh
       shell: chsh -s $(which zsh) "{{ user }}"
-      when: current_shell.stdout != "/usr/bin/zsh"
 
     - name: Check if Powerlevel10K theme is installed
       stat:
