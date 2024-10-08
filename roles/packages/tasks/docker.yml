@@ -15,9 +15,9 @@
 
     - name: Create directory for Docker's GPG key
       file:
-      path: /etc/apt/keyrings
-      state: directory
-      mode: "0755"
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
 
     - name: Download Docker's GPG key
       get_url:
