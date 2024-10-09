@@ -27,6 +27,3 @@
 
     - name: Parameter PC by using dconf
       include_tasks: dconf.yml
-
-    - name: set theme (Gnome and icons)
-      include_tasks: theme.yml
