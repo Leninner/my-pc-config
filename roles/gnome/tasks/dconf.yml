@@ -22,14 +22,6 @@
     value: "'24h'"
     state: present
 
-- name: "Gnome show seconds"
-  become: true
-  become_user: "{{ user }}"
-  dconf:
-    key: "/org/gnome/desktop/interface/clock-show-seconds"
-    value: "true"
-    state: present
-
 - name: "Gnome show battery percentage"
   become: true
   become_user: "{{ user }}"

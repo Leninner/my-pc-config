@@ -25,3 +25,11 @@
         owner: "{{ user }}"
         group: "{{ user }}"
         mode: 0755
+
+    - name: Projects
+      file:
+        path: "home/{{ user }}/projects"
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0755

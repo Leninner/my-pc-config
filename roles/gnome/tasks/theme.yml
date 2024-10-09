@@ -16,12 +16,12 @@
     - name: "Clone the Marble-shell-theme repository"
       ansible.builtin.git:
         repo: "https://github.com/imarkoff/Marble-shell-theme.git"
-        dest: "~/projects/github/Marble-shell-theme"
+        dest: "/home/{{ user }}/projects/github/Marble-shell-theme"
         version: main
 
     - name: "Run the install script"
       ansible.builtin.command:
-        cmd: python ~/projets/github/Marble-shell-theme/install.py -a --filled
+        cmd: python /home/{{ user }}/projects/github/Marble-shell-theme/install.py -a --filled
 
     - name: "Set Gnome theme"
       become: true
