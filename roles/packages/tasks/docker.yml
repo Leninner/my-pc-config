@@ -31,10 +31,6 @@
         groups: "docker,sudo"
         append: true
 
-    - name: Install Docker module for Python
-      ansible.builtin.pip:
-        name: docker
-
     - name: Restart Docker
       ansible.builtin.service:
         name: docker

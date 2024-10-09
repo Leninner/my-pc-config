@@ -25,10 +25,7 @@ neovim:
 	ansible-playbook computer.yml --tags "neovim"
 
 docker:
-	ansible-playbook computer.yml --tags "docker"
-
-asdf:
-	ansible-playbook computer.yml --tags "asdf"
+	ansible-playbook computer.yml --tags "docker" --ask-become-pass
 
 dotfiles:
 	ansible-playbook computer.yml --tags dotfiles
