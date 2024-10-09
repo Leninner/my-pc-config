@@ -6,6 +6,7 @@
   changed_when: false
 
 - name: "Download and set the theme"
+  become: true
   block:
     - name: "Ensure the Github projects directory exists"
       ansible.builtin.file:

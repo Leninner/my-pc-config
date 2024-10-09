@@ -4,7 +4,7 @@
   become_user: "{{ user }}"
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///home/{{ user }}/.wallpaper.png'"
+    value: "'file://home/{{ user }}/.wallpaper.png'"
 
 - name: "Gnome show date"
   become: true
