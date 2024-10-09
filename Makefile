@@ -27,5 +27,8 @@ neovim:
 docker:
 	ansible-playbook computer.yml --tags "docker" --ask-become-pass
 
+gnome:
+	ansible-playbook computer.yml --tags "gnome" --ask-become-pass
+
 dotfiles:
 	ansible-playbook computer.yml --tags dotfiles
