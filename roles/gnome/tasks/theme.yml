@@ -21,7 +21,7 @@
 
     - name: "Run the install script"
       ansible.builtin.command:
-        cmd: python3 /home/{{ user }}/projects/github/Marble-shell-theme/install.py -a --filled
+        cmd: python3 /home/{{ user }}/projects/github/Marble-shell-theme/install.py -a
 
     - name: "Set Gnome theme"
       become: true
