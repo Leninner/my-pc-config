@@ -1,6 +1,5 @@
 - name: Create main directories
   become: true
-  become_user: "{{ user }}"
   tags: directories
   block:
     - name: Dev
