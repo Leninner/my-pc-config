@@ -7,8 +7,7 @@ This project contains all the configuration files written using Ansible.
 - Install base
 
 ```bash
-apt update && apt -y install git
-apt install make
+sudo apt update && sudo apt -y install git make
 ```
 
 - Download Github repository
@@ -23,6 +22,8 @@ git clone https://github.com/Leninner/my-pc-config.git
 make init # Install ansible
 make full # Execute all playbooks
 ```
+
+> This configuration works fine with Ubuntu. You must take care that the user name in vars/user.yml matches with the user that you used in the SO setup.
 
 ## Related projects
 
