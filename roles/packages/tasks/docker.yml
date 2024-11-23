@@ -36,3 +36,23 @@
         name: docker
         state: restarted
         enabled: true
+
+    - name: Make sure that docker group exists
+      group:
+        name: docker
+        state: present
+
+    - name: Add the user to docker group
+      user:
+        name: "{{ user }}"
+        groups: docker
+        append: yes
+
+    - name: Check if the user has permissions to execute docker ps command
+      command: docker ps
+      register: result
+      ignore_errors: yes
+
+    - name: Mostrar el resultado de la ejecución de docker ps
+      debug:
+        var: result.stdout

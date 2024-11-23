@@ -19,6 +19,6 @@ to_remove:
   - gnome-taquin
   - gnome-tetravex
   - evolution
-fav_apps: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'wezterm.desktop']"
+fav_apps: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'wezterm.desktop', 'chrome.desktop']"
 dconf_path_theme: "/org/gnome/shell/extensions/user-theme/name"
 dconf_path_icon: "/org/gnome/desktop/interface/icon-theme"

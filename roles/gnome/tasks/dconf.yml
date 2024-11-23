@@ -78,15 +78,16 @@
     value: "{{ fav_apps }}"
     state: present
 
-- name: "Ocultar automáticamente el dock"
+- name: "Automatically hide the dock"
   become: true
   become_user: "{{ user }}"
   dconf:
+    dbus_session: yes
     key: "/org/gnome/shell/extensions/dash-to-dock/autohide"
-    value: "true"
+    value: true
     state: present
 
-- name: "Posicionar el dock en la parte inferior"
+- name: "Set the dock in the bottom side"
   become: true
   become_user: "{{ user }}"
   dconf:
